@@ -30,13 +30,25 @@
 
 /*-------------------------------- Constants --------------------------------*/
 
-
+const winningCombos = [
+    // horizontal win
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    // vertical win
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    // diagonal win
+    [0, 4, 8],
+    [2, 4, 6],
+]
 
 /*---------------------------- Variables (state) ----------------------------*/
 let board =[
-    'board[0]','board[1]','board[2]',
-    'board[3]','board[4]','board[5]',
-    'board[6]','board[7]','board[8]'
+    'X','O','',
+    '','','',
+    '','','X'
 ];
 let turn = 'X';
 let winner = false;
@@ -61,13 +73,9 @@ const render = () =>{
 }
 
 const updateBoard = () => {
-    for(let i = 0; i < board.length; i++){
-        if(board[i] % 2 === 0){
-            board[i] = 'X'
-        }else{
-            board[i] = 'O'
-        }
-    }
+    squareEls.forEach((square, index) =>{
+        square.textContent = board[index];
+    })
 }
 
 const updateMessage = () => {
@@ -80,11 +88,32 @@ const updateMessage = () => {
     }
    
 }
+const handleClick = (event) =>{
+    const squareIndex = event.target.id;
+    console.log(squareIndex);
+    if(board[squareIndex] !== '' || winner){
+        return
+    }
+    placePiece(squareIndex);
+    render();
+}
 
+const placePiece = (index) =>{
+    board[index] = turn
+    console.log(board);
+}
+
+const checkForWinner = () =>{
+    // if()
+}
 
 
 
 /*----------------------------- Event Listeners -----------------------------*/
 addEventListener("load", init)
+squareEls.forEach(square => {
+square.addEventListener("click", handleClick);
+});
+
 
 
